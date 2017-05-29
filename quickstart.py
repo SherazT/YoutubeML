@@ -8,12 +8,10 @@ DEVELOPER_KEY = config.key
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
-def youtube_search(options):
-  youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
-    developerKey=DEVELOPER_KEY)
+youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
+  developerKey=DEVELOPER_KEY)
 
-  # Call the search.list method to retrieve results matching the specified
-  # query term.
+def youtube_search(options):
   search_response = youtube.search().list(
     q=options.q,
     part="id,snippet",
@@ -27,11 +25,11 @@ def youtube_search(options):
     if search_result["id"]["kind"] == "youtube#video":
       videos.append("%s (%s)" % (search_result["snippet"]["title"],
                                  search_result["id"]["videoId"]))
-
   print "Videos:\n", "\n".join(videos), "\n"
 
 if __name__ == "__main__":
-  argparser.add_argument("--q", help="Search term", default="Funny Song")
+  sheraz = "swag"
+  argparser.add_argument("--q", help="Search term", default=sheraz)
   argparser.add_argument("--max-results", help="Max results", default=10)
   args = argparser.parse_args()
 
