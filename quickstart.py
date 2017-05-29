@@ -1,10 +1,10 @@
-#!/usr/bin/python
 import pdb
+import config
 from apiclient.discovery import build
 from apiclient.errors import HttpError
 from oauth2client.tools import argparser
 
-DEVELOPER_KEY = "AIzaSyA0W-NMZ7LnwIxCuwj3vHLI2xOg8lKg-d8"
+DEVELOPER_KEY = config.key
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
