@@ -38,8 +38,7 @@ def liked_videos_list_by_username(service, **kwargs):
   results = service.channels().list(
     **kwargs
   ).execute()
-
-return results['items'][0]['id']['liked'](category = 'comedy').join(results['items'][0]['id']['liked'](category = 'music'))
+  return results['items'][0]['id']['liked'](category = 'comedy').join(results['items'][0]['id']['liked'](category = 'music'))
 
 def youtube_search(options):
   search_response = youtube.search().list(
@@ -56,7 +55,7 @@ def youtube_search(options):
                                  search_result["id"]["videoId"],
                                  search_result["snippet"]["description"],
                                  search_result["snippet"]["tags"]))
-return videos
+      return videos
 
 def train(channel_data, ran_video_data):
     ds_channel = pd.read_json(channel_data)
@@ -101,8 +100,8 @@ if __name__ == '__main__':
   first_ten_similar = []
 
     #poping only top 10 of similar index for variety in the types of songs/videos we'll have
-    for idx, row in ds_videos.iterrows():
-        first_ten_similar.push(row.predict(10)) #will return the 10 most similar
+  for idx, row in ds_videos.iterrows():
+      first_ten_similar.push(row.predict(10)) #will return the 10 most similar
 
   print(first_ten_similar.sort(similar_items)[:10]) #sort by similarity score and print
 
