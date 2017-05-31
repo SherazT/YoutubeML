@@ -1,8 +1,11 @@
 import httplib2
 import os
 import sys
-import numpy
-import pandas
+import pandas as pd
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import linear_kernel
+
 
 from apiclient.discovery import build
 from apiclient.errors import HttpError
@@ -77,9 +80,9 @@ def _train(self, ds_channel, ds_videos):
                        for i in similar_indices]
       flattened = sum(similar_items[1:], ())
 
-def predict(self, item_id, ):
+def predict(self, title, description, tags, num):
 
-  return self._r.zrange(self.SIMKEY % item_id,
+  return self.zrange(self.SIMKEY % title, description, tags,
                         0,
                         num-1,
                         withscores=True,
@@ -88,9 +91,20 @@ def predict(self, item_id, ):
 if __name__ == '__main__':
   search_term = "funny songs" #could use a better term here
   argparser.add_argument("--q", help="Search term", default=search_term)
-  argparser.add_argument("--max-results", help="Max results", default=10)
+  argparser.add_argument("--max-results", help="Max results", default=5000)
   args = argparser.parse_args()
-  youtube_search(args)
+  
+  liked_videos = liked_videos_list_by_username(service, part='snippet,contentDetails,statistics', mine=true)
 
-  train(liked_videos_list_by_username(service, part='snippet,contentDetails,statistics', mine=true), youtube_search(args))
+  train(liked_videos, youtube_search(args))
+
+  first_ten_similar = []
+
+    #poping only top 10 of similar index for variety in the types of songs/videos we'll have
+    for idx, row in ds_videos.iterrows():
+        first_ten_similar.push(row.predict(10)) #will return the 10 most similar
+
+  print(first_ten_similar.sort(similar_items)[:10]) #sort by similarity score and print
+
+
 
